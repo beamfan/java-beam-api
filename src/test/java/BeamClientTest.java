@@ -1,6 +1,9 @@
 import ch.bitmate.BeamClient;
+import ch.bitmate.model.TransactionStatus;
 import ch.bitmate.model.WalletStatus;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -17,5 +20,12 @@ public class BeamClientTest {
 
         assertNotNull(walletStatus);
         assertTrue(walletStatus.getDifficulty() > 0);
+    }
+
+    @Test
+    public void testTxList() {
+        List<TransactionStatus> transactionStatus = beamClient.getTxList();
+
+        System.out.println(transactionStatus);
     }
 }
