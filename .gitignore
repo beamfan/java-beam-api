@@ -1,6 +1,5 @@
 *.iml
 *.class
-*.war
 
 # User-specific stuff:
 .idea/**/workspace.xml
