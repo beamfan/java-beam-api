@@ -9,7 +9,7 @@ A Java API Wrapper for the Beam Cryptocurrency Wallet.
 - [ ] create_address
 - [x] validate_address
 - [ ] tx_send
-- [ ] tx_status
+- [x] tx_status
 - [ ] tx_split
 - [ ] tx_list
 - [ ] tx_cancel
