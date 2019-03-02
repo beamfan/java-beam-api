@@ -62,7 +62,7 @@ public class BeamClient {
         return callBeamApi("{\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"get_utxo\"}");
     }
 
-    public List<TransactionStatus> getTxList() {
+    public List<TransactionStatus> getTransactions() {
         String response = callBeamApi("{\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"tx_list\"}");
 
         Type listType = new TypeToken<ArrayList<TransactionStatus>>(){}.getType();
@@ -84,15 +84,27 @@ public class BeamClient {
         return result;
     }
 
-    public String getStatus(String txId){
-        return callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 4,\"method\":\"status\", \"params\":{\t\"txId\" : \"" + txId + "\" }}");
+    public TransactionStatus getTransaction(String txId){
+        String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"tx_status\", \"params\":{\t\"txId\" : \"" + txId + "\" }}");
+
+        if (response == null){
+            return null;
+        }
+
+        String result = new JsonParser().parse(response).getAsJsonObject().get("result").toString();
+        TransactionStatus transactionStatus = gson.fromJson(result, TransactionStatus.class);
+
+        return transactionStatus;
     }
 
     public boolean validateAddress(String walletAddress) {
-        String validateResult = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 4,\"method\":\"validate_address\", \"params\":{\t\"address\" : \"" + walletAddress + "\" }}");
+        String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"validate_address\", \"params\":{\t\"address\" : \"" + walletAddress + "\" }}");
 
+        if (response == null){
+            return false;
+        }
 
-        JsonObject jsonObject = new JsonParser().parse(validateResult).getAsJsonObject();
+        JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
         boolean isValid = jsonObject.get("result").getAsJsonObject().get("is_valid").getAsBoolean();
 
         return isValid;

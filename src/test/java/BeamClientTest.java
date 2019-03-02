@@ -13,18 +13,30 @@ public class BeamClientTest {
     private final BeamClient beamClient = new BeamClient("localhost", 10001);
 
     @Test
-    public void testBalance() {
+    public void testWalletStatus() {
         WalletStatus walletStatus = beamClient.getWalletStatus();
+
+        assertNotNull(walletStatus);
 
         System.out.println(walletStatus.toString());
 
-        assertNotNull(walletStatus);
         assertTrue(walletStatus.getDifficulty() > 0);
     }
 
     @Test
-    public void testTxList() {
-        List<TransactionStatus> transactionStatus = beamClient.getTxList();
+    public void testGetTransactions() {
+        List<TransactionStatus> transactionStatus = beamClient.getTransactions();
+
+        assertNotNull(transactionStatus);
+
+        System.out.println(transactionStatus);
+    }
+
+    @Test
+    public void testGetTransaction() {
+        TransactionStatus transactionStatus = beamClient.getTransaction("2bef147d43bb4bf6abe9b107ea943f7c");
+
+        assertNotNull(transactionStatus);
 
         System.out.println(transactionStatus);
     }
