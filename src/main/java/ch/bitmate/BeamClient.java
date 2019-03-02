@@ -1,6 +1,7 @@
 package ch.bitmate;
 
 import ch.bitmate.model.TransactionStatus;
+import ch.bitmate.model.TransactionStatusType;
 import ch.bitmate.model.WalletStatus;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -76,6 +77,20 @@ public class BeamClient {
      */
     public List<TransactionStatus> getTransactions() {
         String response = callBeamApi("{\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"tx_list\"}");
+
+        Type listType = new TypeToken<ArrayList<TransactionStatus>>(){}.getType();
+        List<TransactionStatus> txList = gson.fromJson(new JsonParser().parse(response).getAsJsonObject().get("result"), listType);
+
+        return txList;
+    }
+
+    /**
+     * Returns list of all historical Beam transactions in the wallet. Filtered by {@link ch.bitmate.model.TransactionStatusType}
+     *
+     * @return list of {@link TransactionStatus}
+     */
+    public List<TransactionStatus> getTransactions(TransactionStatusType transactionStatusType) {
+        String response = callBeamApi("{\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"tx_list\", \"params\": {\"filter\": {\"status\": " + transactionStatusType.code() + "}}}");
 
         Type listType = new TypeToken<ArrayList<TransactionStatus>>(){}.getType();
         List<TransactionStatus> txList = gson.fromJson(new JsonParser().parse(response).getAsJsonObject().get("result"), listType);
