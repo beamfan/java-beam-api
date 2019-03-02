@@ -14,20 +14,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BeamClient {
-    private String ip;
+    private String host;
     private int port;
-    private OkHttpClient client = new OkHttpClient();
-    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    private Gson gson = new Gson();
+    private String endpoint = "/api/wallet";
 
-    public BeamClient(String ip, int port) {
-        this.ip = ip;
+    private OkHttpClient client = new OkHttpClient();
+    private Gson gson = new Gson();
+    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+    public BeamClient(String host, int port) {
+        this.host = host;
         this.port = port;
     }
 
     private String callBeamApi(String request) {
         try {
-            return post("http://" + ip + ":" + port + "/api/wallet", request);
+            return post(String.format("http://%s:%s%s", host, port, endpoint), request);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,6 +47,11 @@ public class BeamClient {
         }
     }
 
+    /**
+     * Returns wallet status, including available groth balances
+     *
+     * @return {@link WalletStatus} object containing current wallet status
+     */
     public WalletStatus getWalletStatus() {
         String response = callBeamApi("{\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"wallet_status\"}");
 
@@ -62,6 +69,11 @@ public class BeamClient {
         return callBeamApi("{\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"get_utxo\"}");
     }
 
+    /**
+     * Returns list of all historical Beam transactions in the wallet.
+     *
+     * @return list of {@link TransactionStatus}
+     */
     public List<TransactionStatus> getTransactions() {
         String response = callBeamApi("{\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"tx_list\"}");
 
@@ -84,6 +96,12 @@ public class BeamClient {
         return result;
     }
 
+    /**
+     * Returns a {@link TransactionStatus} object for a given txId which contains fee, number of confirmations, height, kernel, and more
+     *
+     * @param txId
+     * @return {@link TransactionStatus} containining fee, number of confirmations, height, kernel, and more
+     */
     public TransactionStatus getTransaction(String txId){
         String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"tx_status\", \"params\":{\t\"txId\" : \"" + txId + "\" }}");
 
@@ -97,6 +115,12 @@ public class BeamClient {
         return transactionStatus;
     }
 
+    /**
+     * Determines if walletAddress is a valid Beam address.
+     *
+     * @param walletAddress
+     * @return true/false if walletAddress is a valid beam address
+     */
     public boolean validateAddress(String walletAddress) {
         String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"validate_address\", \"params\":{\t\"address\" : \"" + walletAddress + "\" }}");
 
