@@ -1,12 +1,24 @@
 # BeamClient java library
 A Java API Wrapper for the Beam Cryptocurrency Wallet.
 
+# How to Build
+* mvn clean install
+* Note: For the tests to pass, you must be running an instance of Beam's wallet-api on localhost, port 10001. To skip tests. Add -DskipTests to the command line.
+
+# To-do
+- [ ] create_address
+- [x] validate_address
+- [ ] tx_send
+- [ ] tx_status
+- [ ] tx_split
+- [ ] tx_list
+- [ ] tx_cancel
+- [x] wallet_status
+- [ ] get_utxo
+- [ ] tx_list
+- [ ] tx_cancel
+
 # Dependencies
 * Gson
 * OkHttp
 * JUnit (for testing)
-
-# How to Build
-* Install Maven
-* Navigate to directory and type "mvn clean install". This will run the tests and install the JAR into your local repository.
-* Note: For the tests to pass, you must be running an instance of Beam's wallet-api on localhost, port 10001. To skip tests. Add -DskipTests to the command line.

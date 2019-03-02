@@ -2,7 +2,7 @@ package ch.bitmate.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Balance {
+public class WalletStatus {
     private long available;
     private long difficulty;
     private long locked;
@@ -57,7 +57,7 @@ public class Balance {
 
     @Override
     public String toString() {
-        return "Balance{" +
+        return "WalletStatus{" +
                 "available=" + available +
                 ", difficulty=" + difficulty +
                 ", locked=" + locked +

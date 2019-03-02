@@ -1,5 +1,5 @@
 import ch.bitmate.BeamClient;
-import ch.bitmate.model.Balance;
+import ch.bitmate.model.WalletStatus;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -11,11 +11,11 @@ public class BeamClientTest {
 
     @Test
     public void testBalance() {
-        Balance balance = beamClient.getBalance();
+        WalletStatus walletStatus = beamClient.getWalletStatus();
 
-        System.out.println(balance.toString());
+        System.out.println(walletStatus.toString());
 
-        assertNotNull(balance);
-        assertTrue(balance.getDifficulty() > 0);
+        assertNotNull(walletStatus);
+        assertTrue(walletStatus.getDifficulty() > 0);
     }
 }

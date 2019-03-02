@@ -1,6 +1,6 @@
 package ch.bitmate;
 
-import ch.bitmate.model.Balance;
+import ch.bitmate.model.WalletStatus;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -41,7 +41,7 @@ public class BeamClient {
         }
     }
 
-    public Balance getBalance() {
+    public WalletStatus getWalletStatus() {
         String response = callBeamApi("{\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"wallet_status\"}");
 
         if (response == null){
@@ -49,9 +49,9 @@ public class BeamClient {
         }
 
         String result = new JsonParser().parse(response).getAsJsonObject().get("result").toString();
-        Balance balance = gson.fromJson(result, Balance.class);
+        WalletStatus walletStatus = gson.fromJson(result, WalletStatus.class);
 
-        return balance;
+        return walletStatus;
     }
 
     public String getUtxos() {
