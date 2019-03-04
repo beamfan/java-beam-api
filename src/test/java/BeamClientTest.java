@@ -1,5 +1,6 @@
 import ch.bitmate.BeamClient;
 import ch.bitmate.model.TransactionStatus;
+import ch.bitmate.model.TransactionStatusType;
 import ch.bitmate.model.WalletStatus;
 import org.junit.Test;
 
@@ -39,5 +40,20 @@ public class BeamClientTest {
         assertNotNull(transactionStatus);
 
         System.out.println(transactionStatus);
+    }
+
+    @Test
+    public void testGetTransactionsFilteredByType() {
+        List<TransactionStatus> transactionStatus = beamClient.getTransactions(TransactionStatusType.COMPLETED);
+
+        assertNotNull(transactionStatus);
+
+        System.out.println(transactionStatus);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testCancelTransactionInvalid() {
+        boolean result = beamClient.cancelTransaction("123");
+        System.out.println(result);
     }
 }

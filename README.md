@@ -16,7 +16,7 @@ A Java API Wrapper for the Beam Cryptocurrency Wallet.
 - [x] wallet_status
 - [ ] get_utxo
 - [x] tx_list
-- [ ] tx_cancel
+- [x] tx_cancel
 
 # Dependencies
 * Gson
