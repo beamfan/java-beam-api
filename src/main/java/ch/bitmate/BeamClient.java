@@ -115,12 +115,30 @@ public class BeamClient {
     }
 
 
-    public String sendDust(String address, long amount) {
-        String result = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"tx_send\", \"params\":{\"session\" : 128,\"value\" : " + amount + ",\"fee\" : 10,\"address\" : \"" + address + "\", \"comment\": \"hi\"}}");
+    /**
+     * Send a BEAM transaction.
+     * @param address
+     * @param amount
+     * @param fee
+     * @return {@link TransactionStatus} object containing txId and other details.
+     */
+    public TransactionStatus sendTransaction(String address, long amount, long fee) {
+        String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"tx_send\", \"params\":{\"session\" : 1,\"value\" : " + amount + ",\"fee\" : " + fee + ",\"address\" : \"" + address + "\"}}");
 
-        return result;
+        // Get the transaction we just created.
+        JsonObject jsonObject = jsonParser.parse(response).getAsJsonObject();
+        String txId = jsonObject.get("result").getAsJsonObject().get("txId").getAsString();
+
+        TransactionStatus transactionStatus = getTransaction(txId);
+
+        return transactionStatus;
     }
 
+    /**
+     * Cancel a transaction. Usually used on "stuck"/failed transactions.
+     * @param txid
+     * @return true/false if the transaction was successfully cancelled
+     */
     public boolean cancelTransaction(String txid) {
         String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"tx_cancel\", \"params\":{\"txId\" : \"" + txid + "\"}}");
 
