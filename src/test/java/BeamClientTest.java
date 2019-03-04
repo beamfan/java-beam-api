@@ -62,4 +62,11 @@ public class BeamClientTest {
         TransactionStatus response = beamClient.sendTransaction("215f68b6d217fd687402353ff9318a8d1149ffe96d8ce2ae2f4cda3360fc0bc62", 111112, 10);
         System.out.println("Sent:"  + response);
     }
+
+    @Test
+    public void testCreateAndValidateAddress() {
+        String address = beamClient.createAddress(0);
+        System.out.println("New address = " + address);
+        assertTrue(beamClient.validateAddress(address));
+    }
 }

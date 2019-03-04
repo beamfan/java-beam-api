@@ -6,7 +6,7 @@ A Java library for the Beam cryptocurrency Wallet API.
 * Note: For the tests to pass, you must be running an instance of Beam's wallet-api on localhost, port 10001. To skip tests. Add -DskipTests to the command line.
 
 # To-do
-- [ ] create_address
+- [x] create_address
 - [x] validate_address
 - [x] tx_send
 - [x] tx_status

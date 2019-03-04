@@ -154,7 +154,7 @@ public class BeamClient {
      * @return {@link TransactionStatus} containining fee, number of confirmations, height, kernel, and more
      */
     public TransactionStatus getTransaction(String txId){
-        String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"tx_status\", \"params\":{\t\"txId\" : \"" + txId + "\" }}");
+        String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"tx_status\", \"params\":{\"txId\" : \"" + txId + "\" }}");
 
         String result = jsonParser.parse(response).getAsJsonObject().get("result").toString();
         TransactionStatus transactionStatus = gson.fromJson(result, TransactionStatus.class);
@@ -169,11 +169,24 @@ public class BeamClient {
      * @return true/false if walletAddress is a valid beam address
      */
     public boolean validateAddress(String walletAddress) {
-        String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"validate_address\", \"params\":{\t\"address\" : \"" + walletAddress + "\" }}");
+        String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"validate_address\", \"params\":{\"address\" : \"" + walletAddress + "\" }}");
 
         JsonObject jsonObject = jsonParser.parse(response).getAsJsonObject();
         boolean isValid = jsonObject.get("result").getAsJsonObject().get("is_valid").getAsBoolean();
 
         return isValid;
+    }
+
+    /**
+     * Creates a new Beam address. If durationInHours is set to 0, the address will never expire.
+     * @param durationInHours
+     * @return {@link String} of the new address
+     */
+    public String createAddress(int durationInHours) {
+        String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"create_address\", \"params\":{\"lifetime\" : " + durationInHours + " }}");
+        String result = jsonParser.parse(response).getAsJsonObject().get("result").getAsString();
+
+        return result;
+
     }
 }
