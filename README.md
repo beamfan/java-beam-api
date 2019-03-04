@@ -1,5 +1,5 @@
 # BeamClient java library
-A Java API Wrapper for the Beam Cryptocurrency Wallet.
+A Java library for the Beam cryptocurrency Wallet API.
 
 # How to Build
 * mvn clean install
