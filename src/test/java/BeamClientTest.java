@@ -44,11 +44,11 @@ public class BeamClientTest {
 
     @Test
     public void testGetTransactionsFilteredByType() {
-        List<TransactionStatus> transactionStatus = beamClient.getTransactions(TransactionStatusType.COMPLETED);
+        List<TransactionStatus> transactions = beamClient.getTransactions(TransactionStatusType.COMPLETED);
 
-        assertNotNull(transactionStatus);
+        assertNotNull(transactions);
 
-        System.out.println(transactionStatus);
+        System.out.println(transactions);
     }
 
     @Test(expected = RuntimeException.class)
