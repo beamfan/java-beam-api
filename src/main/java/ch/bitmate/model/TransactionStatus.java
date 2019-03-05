@@ -6,7 +6,7 @@ public class TransactionStatus {
     private String kernel;
     private String receiver;
     private String sender;
-    private long status;
+    private TransactionStatusType status;
     private String txId;
     private long value;
 
@@ -50,11 +50,11 @@ public class TransactionStatus {
         this.sender = sender;
     }
 
-    public long getStatus() {
+    public TransactionStatusType getStatus() {
         return status;
     }
 
-    public void setStatus(long status) {
+    public void setStatus(TransactionStatusType status) {
         this.status = status;
     }
 
