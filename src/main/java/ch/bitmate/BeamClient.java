@@ -179,11 +179,11 @@ public class BeamClient {
 
     /**
      * Creates a new Beam address. If durationInHours is set to 0, the address will never expire.
-     * @param durationInHours
+     * @param expiration
      * @return {@link String} of the new address
      */
-    public String createAddress(int durationInHours) {
-        String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"create_address\", \"params\":{\"lifetime\" : " + durationInHours + " }}");
+    public String createAddress(String expiration) {
+        String response = callBeamApi("{\"jsonrpc\":\"2.0\", \"id\": 1,\"method\":\"create_address\", \"params\":{\"expiration\" : \"" + expiration + "\" }}");
         String result = jsonParser.parse(response).getAsJsonObject().get("result").getAsString();
 
         return result;

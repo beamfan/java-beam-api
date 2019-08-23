@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class WalletStatus {
     private long available;
-    private long difficulty;
     private long locked;
     private long maturing;
     private long receiving;
@@ -25,10 +24,6 @@ public class WalletStatus {
 
     public long getCurrentHeight() {
         return currentHeight;
-    }
-
-    public long getDifficulty() {
-        return difficulty;
     }
 
     public long getLocked() {
@@ -59,7 +54,6 @@ public class WalletStatus {
     public String toString() {
         return "WalletStatus{" +
                 "available=" + available +
-                ", difficulty=" + difficulty +
                 ", locked=" + locked +
                 ", maturing=" + maturing +
                 ", receiving=" + receiving +
